@@ -46,7 +46,7 @@ public class CollectionOperator {
 
     public List<Integer> popCommonElement(int[] firstArray, int[] secondArray) {
         List<Integer> firstList = Arrays.stream(firstArray)
-                                    .boxed().collect(Collectors.toList());
+                .boxed().collect(Collectors.toList());
         List<Integer> secondList = Arrays.stream(secondArray)
                 .boxed().collect(Collectors.toList());
         return firstList.stream().filter(element -> secondList.contains(element)).collect(Collectors.toList());
@@ -57,7 +57,8 @@ public class CollectionOperator {
                 .boxed().collect(Collectors.toList());
         List<Integer> secondList = Arrays.stream(secondArray).mapToInt(Integer::intValue)
                 .boxed().collect(Collectors.toList());
-        return secondList.stream().
-                filter(element -> !firstList.contains(element)).collect(Collectors.toList());
+        firstList.addAll(secondList.stream().
+                filter(element -> !firstList.contains(element)).collect(Collectors.toList()));
+        return firstList;
     }
 }

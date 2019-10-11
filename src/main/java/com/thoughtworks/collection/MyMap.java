@@ -1,9 +1,10 @@
 package com.thoughtworks.collection;
 
+import com.sun.corba.se.spi.ior.ObjectId;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MyMap {
 
@@ -17,22 +18,36 @@ public class MyMap {
     }
 
     public List<Integer> getTriple() {
-        throw new NotImplementedException();
+       return array.stream().map(element -> element * 3)
+               .collect(Collectors.toList());
     }
 
     public List<String> mapLetter() {
-        throw new NotImplementedException();
+        return array.stream().map(x -> letterList.get(x - 1)).collect(Collectors.toList());
     }
 
     public List<String> mapLetters() {
-        throw new NotImplementedException();
+        return array.stream()
+                .map(this::validateAndConcatLetters)
+                .collect(Collectors.toList());
     }
 
     public List<Integer> sortFromBig() {
-        throw new NotImplementedException();
+        return array.stream()
+                .sorted(Comparator
+                .reverseOrder()).collect(Collectors.toList());
     }
 
     public List<Integer> sortFromSmall() {
-        throw new NotImplementedException();
+        return array.stream().sorted()
+                .collect(Collectors.toList());
+    }
+
+    public String validateAndConcatLetters(int index){
+        int position = index - 1;
+        if(index > 26){
+            return letterList.get((position  / 26) - 1) + letterList.get(position % 26);
+        }
+        return letterList.get(position);
     }
 }
